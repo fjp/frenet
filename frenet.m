@@ -3,19 +3,19 @@ clear all
 clc
 set(0, 'DefaultLineLineWidth', 2);
 
-nBahnPunkte = 20;
+nPoints = 20;
 
-x = zeros(1,nBahnPunkte);
-y = zeros(1,nBahnPunkte);
+x = zeros(1,nPoints);
+y = zeros(1,nPoints);
 
-xRef = zeros(1,nBahnPunkte);
-yRef = zeros(1,nBahnPunkte);
-psiRef = zeros(1,nBahnPunkte);
-kappaRef = zeros(1,nBahnPunkte);
-lCumRef = zeros(1,nBahnPunkte);
+xRef = zeros(1,nPoints);
+yRef = zeros(1,nPoints);
+psiRef = zeros(1,nPoints);
+kappaRef = zeros(1,nPoints);
+lCumRef = zeros(1,nPoints);
 
-deltaX = zeros(1,nBahnPunkte);
-deltaY = zeros(1,nBahnPunkte);
+deltaX = zeros(1,nPoints);
+deltaY = zeros(1,nPoints);
 
 %% Generate reference path
 dx = 2;
@@ -24,20 +24,20 @@ m = 0.5;
 
 xRef(1) = -2;
 yRef(1) = dy;
-for i = 2:nBahnPunkte
+for i = 2:nPoints
     xRef(i) = xRef(i-1) + dx;
     yRef(i-1) = m*xRef(i-1) + dy; 
 end
 yRef(end) = m*xRef(end) + dy;
 
-for i = 1:nBahnPunkte
+for i = 1:nPoints
     iPrev = i - 1;
     if (iPrev < 1)
         iPrev = 0;
     end
     iNext = i + 1;
-    if (iNext > nBahnPunkte)
-        iNext = nBahnPunkte;
+    if (iNext > nPoints)
+        iNext = nPoints;
     end
     deltaX(i) = xRef(iNext) - xRef(i);
     deltaY(i) = yRef(iNext) - yRef(i);
@@ -45,7 +45,7 @@ for i = 1:nBahnPunkte
     psiRef(i) = psi;
     
     % Todo use wiki formula
-    kappaRef = zeros(1,nBahnPunkte);
+    kappaRef = zeros(1,nPoints);
 end
 psiRef(end) = psiRef(end-1);
 %psiRef(1) = 0;
@@ -53,7 +53,7 @@ psiRef(end) = psiRef(end-1);
 lCum = sqrt(deltaX(1)^2 + deltaY(1)^2);
 nSign = (xRef(1) >= 0) - (xRef(1) < 0);
 lCumRef(1) = lCum*nSign;
-for i = 2:nBahnPunkte
+for i = 2:nPoints
     lCum = sqrt(deltaX(i)^2 + deltaY(i)^2);
     nSign = (xRef(i) >= 0) - (xRef(i) < 0);
     lCumRef(i) = lCumRef(i-1) + lCum*nSign;
@@ -142,13 +142,13 @@ hf = plot(s,d, 'Color', 'g', 'Marker', 'o', 'DisplayName', 'Frenet (s,d)');
 
 %% Transform Frenet (s,d) to Cartesian (local) vehicle frame (x,y)
 
-for i = 1:nBahnPunkte
+for i = 1:nPoints
     ps = s(i);
     pd = d(i);
     
     idx = 1;
     
-    while(ps > lCumRef(idx) && (idx < nBahnPunkte - 1))
+    while(ps > lCumRef(idx) && (idx < nPoints - 1))
         idx = idx + 1;
     end
     
