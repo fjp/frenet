@@ -1,7 +1,7 @@
 close all
 clear all
 clc
-set(0, 'DefaultLineLineWidth', 2);
+set(0, 'DefaultLineLineWidth', 1);
 
 nPoints = 20;
 
@@ -18,17 +18,30 @@ deltaX = zeros(1,nPoints);
 deltaY = zeros(1,nPoints);
 
 %% Generate reference path
-dx = 2;
-dy = 1;
-m = 0.5;
+L = 40;
+dL = L/nPoints;
 
-xRef(1) = -2;
-yRef(1) = dy;
+d = 1;
+m = 1;
+
+x0 = 0;
+x1 = 1;
+dx = x1 - x0;
+y0 = d;
+y1 = m*x1 + d;
+dy = y1 - y0;
+
+psi0 = atan2(dy,dx);
+
+dx = dL*cos(psi0);
+dy = dL*sin(psi0);
+
+xRef(1) = -dx;
 for i = 2:nPoints
     xRef(i) = xRef(i-1) + dx;
-    yRef(i-1) = m*xRef(i-1) + dy; 
+    yRef(i-1) = m*xRef(i-1) + d; 
 end
-yRef(end) = m*xRef(end) + dy;
+yRef(end) = m*xRef(end) + d;
 
 for i = 1:nPoints
     iPrev = i - 1;
@@ -65,28 +78,28 @@ grid on;
 hold on;
 
 % Plot line from origin orthogonal to to reference path (intersection)
-L1 = [xRef; yRef];
-L2 = [-xRef; -1/m*(-xRef)];
-P = intersect(L1, L2);
-xMin = P(1);
-yMin = P(2);
+%L1 = [xRef; yRef];
+%L2 = [-xRef; -1/m*(-xRef)];
+%P = intersect(L1, L2);
+%xMin = P(1);
+%yMin = P(2);
 %plot([0, xRef(1), 0, xRef(2), 0, xRef(3)], [0, yRef(1), 0, yRef(2), 0, yRef(3)]);
-plot([0, xMin], [0, yMin]);
 
-shrink = .3;
-axis([min(xRef)-1, max(xRef)*shrink, min(yRef)-1, max(yRef)*shrink]);
+a = d*sin(psi0);
+%axis([min(xRef)-d, max(xRef)*shrink, min(yRef)-d, max(yRef)*shrink]);
 axis equal;
 
 % end time
-T = 1; % seconds
+T = 0.5; % seconds
 
 %% s coordinate
-xx = abs(xMin-xRef(1));
-yy = abs(yMin-yRef(1));
-quiver(xRef(1), yRef(1), xx, yy);
-s0 =  lCumRef(1) + sqrt(xx^2 + yy^2);
-%s0 = 0;
-ds0 = 15;
+%xx = abs(xMin-xRef(1));
+%yy = abs(yMin-yRef(1));
+%quiver(xRef(1), yRef(1), xx, yy);
+shift = 0;%a; %lCumRef(1) + sqrt(xx^2 + yy^2);
+lCumRef = lCumRef + shift; % shift running length
+s0 = 0;
+ds0 = 10;
 dds0 = 0;
 
 sT = 10;
@@ -115,7 +128,7 @@ t = linspace(0,T,20);
 s = cs0 + cs1.*t + cs2.*t.^2 + cs3.*t.^3 + cs4.*t.^4 + cs5.*t.^5;
 
 %% d coordinate
-d0 = -sqrt(xMin.^2 + yMin.^2);%-dy;
+d0 = -d*cos(psi0);
 dd0 = 0;
 ddd0 = 0;
 
@@ -171,3 +184,40 @@ end
 hc = plot(x, y, 'Color', 'b', 'Marker', 'o', 'DisplayName', 'Cart (x,y)');
 
 legend([hr, hf, hc], 'Location', 'best');
+
+%% Plot Frenet states
+figure
+dt = diff(t);
+dt = dt(1);
+hax1 = subplot(2,3,1);
+hp(1) = plot(t, s);
+title('s')
+
+hax2 = subplot(2,3,2);
+hp(2) = plot(t, gradient(s)./dt);
+title('ds = vx')
+
+hax3 = subplot(2,3,3);
+hp(3) = plot(t, gradient(gradient(s))./dt);
+title('dds = ax')
+
+hax4 = subplot(2,3,4);
+hp(4) = plot(t, d);
+title('d')
+
+hax5 = subplot(2,3,5);
+hp(5) = plot(t, gradient(d)./dt);
+title('dd = vy')
+
+hax6 = subplot(2,3,6);
+hp(6) = plot(t, gradient(gradient(d))./dt);
+title('ddd = ay')
+
+hlink = linkprop([hax1, hax2, hax3, hax4, hax5, hax6], {'XGrid','YGrid'});
+
+hax1.XGrid = 'on';
+hax1.YGrid = 'on';
+
+for h = [hax1, hax2, hax3, hax4, hax5, hax6]
+    xlabel(h,  't (s)');
+end
