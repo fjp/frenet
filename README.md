@@ -33,10 +33,10 @@ Using the sign based (in the beginning) jerk da(0), the trajectory with the
 strongest decceleration or the trajectory which accelerates the least respectively 
 is selected and passed to the controller.
 
-[Optimal Trajectory Generation for Dynamic Street Scenarios in a Frenet Frame](https://www.researchgate.net/profile/Moritz_Werling/publication/224156269_Optimal_Trajectory_Generation_for_Dynamic_Street_Scenarios_in_a_Frenet_Frame/links/54f749df0cf210398e9277af.pdf)
+### References
 
-[Dissertation](https://www.ksp.kit.edu/download/1000021738)
-
+- [Optimal Trajectory Generation for Dynamic Street Scenarios in a Frenet Frame](https://www.researchgate.net/profile/Moritz_Werling/publication/224156269_Optimal_Trajectory_Generation_for_Dynamic_Street_Scenarios_in_a_Frenet_Frame/links/54f749df0cf210398e9277af.pdf)
+- [Dissertation](https://www.ksp.kit.edu/download/1000021738)
 
 ### Python code:
 
