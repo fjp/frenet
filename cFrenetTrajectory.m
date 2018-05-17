@@ -26,6 +26,7 @@ classdef cFrenetTrajectory
         y     % y position
         theta % Orientation
         kappa % Curvature
+        dL    % Running length / arc length
         v     % Tangential velocity
         a     % Tangential acceleration
     end
