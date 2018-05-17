@@ -23,3 +23,7 @@ sccprj/
 
 # Octave session info
 octave-workspace
+
+
+# *.md~ files
+*.md~
