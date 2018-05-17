@@ -1,6 +1,7 @@
-clc
-clear all
 close all
+clear all
+clc
+set(0, 'DefaultLineLineWidth', 1);
 disp('Spline 2D test')
     
 x = [-2.5, 0.0, 2.5, 5.0, 7.5, 3.0, -1.0];

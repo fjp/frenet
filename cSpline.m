@@ -115,11 +115,38 @@ classdef cSpline
         % search data segment index
         %%%%%%%%
             % return bisect.bisect(obj.x, x) - 1
-            [~, idx] = min(abs(obj.x - floor(x-2.9)));
-            if (idx == obj.nx)
-                idx = idx - 1;
-            end
+%             [~, idx] = min(abs(obj.x - floor(x-2.9)));
+%             if (idx == obj.nx)
+%                 idx = idx - 1;
+%             end
             %disp(idx)
+            
+            idx = obj.bisect(obj.x, x, 1, length(obj.x)) - 1;
+        end
+        
+        function lo = bisect(obj, list, x, lo, hi)
+        %%% Return the index where to insert item x in list a, assuming a is sorted.
+        % The return value i is such that all e in a[:i] have e <= x, and all e in
+        % a[i:] have e > x.  So if x already appears in the list, a.insert(x) will
+        % insert just after the rightmost x already there.
+        % Optional args lo (default 0) and hi (default len(a)) bound the
+        % slice of a to be searched.
+        %%%%%%
+
+            if lo < 1
+                error('lo must be positive integer');
+            end
+            if isnan(hi)
+                hi = lenght(list);
+            end
+            while lo < hi
+                mid = floor((lo+hi)/2);
+                if x < list(mid)
+                    hi = mid;
+                else
+                    lo = mid+1;
+                end
+            end
         end
         
 
