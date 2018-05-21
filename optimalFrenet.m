@@ -9,13 +9,14 @@ wx = [0.0, 10.0, 20.5, 35.0, 70.5];
 wy = [0.0, -6.0, 5.0, 6.5, 0.0];
 
 % obstacle lists
-ob = [20.0, 10.0;
-      30.0, 6.0;
-      30.0, 8.0;
-      35.0, 8.0;
-      50.0, 3.0];
+objects = [20.0, 10.0;
+    30.0, 6.0;
+    30.0, 8.0;
+    35.0, 8.0;
+    50.0, 3.0];
 
- ds = 0.1;
+
+ds = 0.1;
 GenerateTargetCourse = @(wx, wy) CalcSplineCourse(wx, wy, ds);
 [tx, ty, tyaw, tc, runningLength, referencePath] = GenerateTargetCourse(wx, wy);
 
@@ -36,7 +37,7 @@ if show_animation
 end
 for i = 1:500
     i
-    trajectory = oFrenetPlanner.FrenetOptimalPlanning(referencePath, s0, c_speed, c_d, c_d_d, c_d_dd, ob);
+    trajectory = oFrenetPlanner.FrenetOptimalPlanning(referencePath, s0, c_speed, c_d, c_d_d, c_d_dd, objects);
     
     s0 = trajectory.s(2);
     c_d = trajectory.d(2);
@@ -44,28 +45,28 @@ for i = 1:500
     c_d_dd = trajectory.ddd(2);
     c_speed = trajectory.ds(2);
     
-%     if np.hypot(path.x[1] - tx[-1], path.y[1] - ty[-1]) <= 1.0:
-%         print("Goal")
-%         break
-%     end
-        
+    %     if np.hypot(path.x[1] - tx[-1], path.y[1] - ty[-1]) <= 1.0:
+    %         print("Goal")
+    %         break
+    %     end
+    
     if show_animation
-            cla;
-            plot(tx, ty);
-            hold on;
-            axis equal
-            plot(ob(:, 1), ob(:, 2), 'xk');
-            plot(trajectory.x(1:end), trajectory.y(1:end), '-or');
-            plot(trajectory.x(1), trajectory.y(1), 'vc');
-            xlim([trajectory.x(1) - area, trajectory.x(1) + area]);
-            ylim([trajectory.y(1) - area, trajectory.y(1) + area]);
-            title(['v[km/h]:', num2str(c_speed * 3.6)]);
-            grid on;
-            pause(0.0001);
+        cla;
+        plot(tx, ty);
+        hold on;
+        axis equal
+        plot(objects(:, 1), objects(:, 2), 'xk');
+        plot(trajectory.x(1:end), trajectory.y(1:end), '-or');
+        plot(trajectory.x(1), trajectory.y(1), 'vc');
+        %xlim([trajectory.x(1) - area, trajectory.x(1) + area]);
+        %ylim([trajectory.y(1) - area, trajectory.y(1) + area]);
+        title(['v[km/h]:', num2str(c_speed * 3.6)]);
+        grid on;
+        drawnow
     end
 end
-            
-dips('Finish')
+
+disp('Finish')
 if show_animation
     grid(True)
     pause(0.0001)

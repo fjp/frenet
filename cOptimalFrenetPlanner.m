@@ -5,10 +5,10 @@ classdef cOptimalFrenetPlanner
     properties
         % Parameter
         MAX_SPEED = 50.0 / 3.6  % maximum speed [m/s]
-        MAX_ACCEL = 2.0  % maximum acceleration [m/ss]
-        MAX_CURVATURE = 1.0  % maximum curvature [1/m]
-        MAX_ROAD_WIDTH = 7.0  % maximum road width [m]
-        D_ROAD_W = 1.0  % road width sampling length [m]
+        MAX_ACCEL = 3.0  % maximum acceleration [m/ss]
+        MAX_CURVATURE = 2.0  % maximum curvature [1/m]
+        MAX_ROAD_WIDTH = 15.0  % maximum road width [m]
+        D_ROAD_W = 0.8  % road width sampling length [m]
         DT = 0.2  % time tick [s]
         MAXT = 5.0  % max prediction time [m]
         MINT = 4.0  % min prediction time [m]
@@ -20,19 +20,26 @@ classdef cOptimalFrenetPlanner
         % Cost weights
         KJ = 0.1   % Jerk
         KT = 0.1   % Time
-        KD = 2.0   % Distance
+        KD = 1.0   % Distance from reference path
         KV = 0.5   % Target speed
         KLAT = 1.0 % Lateral
         KLON = 1.0 % Longitudinal
+        
+        numberObjects
     end
     
     methods (Access = public)
         
         function frenetTrajectories = CalcFrenetTrajectories(obj, v, d, dd, ddd, s0)
-            frenetTrajectories = {};
             
             % Generate path for each offset goal
             % Lateral sampling space
+            sizeLatSampleSpace = length(-obj.MAX_ROAD_WIDTH:obj.D_ROAD_W:obj.MAX_ROAD_WIDTH);
+            sizeTimeSpace = length(obj.MINT:obj.DT:obj.MAXT);
+            sizeLonSampleSpace = length((obj.TARGET_SPEED - obj.D_T_S * obj.N_S_SAMPLE):obj.D_T_S:(obj.TARGET_SPEED + obj.D_T_S * obj.N_S_SAMPLE));
+            numberTrajectories = sizeLatSampleSpace*sizeTimeSpace*sizeLonSampleSpace;
+            frenetTrajectories = cell(1, numberTrajectories);
+            iTraj = 1;
             for di = -obj.MAX_ROAD_WIDTH:obj.D_ROAD_W:obj.MAX_ROAD_WIDTH
                 % Lateral motion planning
                 for Ti = obj.MINT:obj.DT:obj.MAXT
@@ -70,7 +77,8 @@ classdef cOptimalFrenetPlanner
                         targetft.Js = obj.KJ * Js + obj.KT * Ti + obj.KV * ds;
                         targetft.J = obj.KLAT * targetft.Jd + obj.KLON * targetft.Js;
                         
-                        frenetTrajectories{end+1} = targetft;
+                        frenetTrajectories{iTraj} = targetft;
+                        iTraj = iTraj + 1;
                     end
                 end
             end
@@ -116,30 +124,46 @@ classdef cOptimalFrenetPlanner
         end
         
         
-        function collision = CheckCollision(obj, ft, ob)
-
-            for i = 1:(length(ob(:, 1)))
-                ox = ob(i, 1);
-                oy = ob(i, 2);
+%         for i in range(len(ob[:, 0])):
+%           d = [((ix - ob[i, 0])**2 + (iy - ob[i, 1])**2)
+%              for (ix, iy) in zip(fp.x, fp.y)]
+% 
+%           collision = any([di <= ROBOT_RADIUS**2 for di in d])
+% 
+%           if collision:
+%             return False
+% 
+%     return True
+        
+        function collision = CheckCollision(obj, ft, objects)
+            
+            for i = 1:obj.numberObjects
+                ox = objects(i, 1);
+                oy = objects(i, 2);
                 d = zeros(length(ft.x), 1);
-                for iPoint = 1:length(ft.x)
-                    ix = ft.x(iPoint);
-                    iy = ft.y(iPoint);
-                    d(iPoint) = ((ix - ox)^2 + (iy - oy)^2);
+                for idxPoint = 1:length(ft.x)
+                    ix = ft.x(idxPoint);
+                    iy = ft.y(idxPoint);
+                    d(idxPoint) = ((ix - ox)^2 + (iy - oy)^2);
                 end
-                collision = any(d+1 <= obj.ROBOT_RADIUS^2);
+                collision = any(d <= obj.ROBOT_RADIUS^2);
                 if collision
-                    plot(ft.x, ft.y)
-                    plot(ox, oy, 'ro');
+                    %plot(ft.x, ft.y)
+                    %plot(ox, oy, 'ro');
+                    %drawnow;
                     return;
                 end
+                
             end
+            collision = 0;
+            %hold on
+            %plot(ft.x, ft.y)
+            %drawnow;
             
         end
 
 
-        function okTrajectories = CheckTrajectories(obj, frenetTrajectories, ob)
-
+        function okTrajectories = CheckTrajectories(obj, frenetTrajectories, objects)
             okTrajectories = {};
             for i = 1:(length(frenetTrajectories))
                 ft = frenetTrajectories{i};
@@ -149,7 +173,7 @@ classdef cOptimalFrenetPlanner
                     continue
                 elseif any(abs(ft.kappa) > obj.MAX_CURVATURE)  % Max curvature check
                     continue
-                elseif obj.CheckCollision(ft, ob)
+                elseif obj.CheckCollision(ft, objects)
                     continue
                 end
 
@@ -158,11 +182,13 @@ classdef cOptimalFrenetPlanner
         end
 
 
-        function bestpath = FrenetOptimalPlanning(obj, referencePath, s0, c_speed, c_d, c_d_d, c_d_dd, ob)
-
+        function bestpath = FrenetOptimalPlanning(obj, referencePath, s0, c_speed, c_d, c_d_d, c_d_dd, objects)
+            % Initialization
+            obj.numberObjects = size(objects, 1);
+            
             frenetTrajectories = obj.CalcFrenetTrajectories(c_speed, c_d, c_d_d, c_d_dd, s0);
             frenetTrajectories = obj.CalcGlobalTrajectories(frenetTrajectories, referencePath);
-            frenetTrajectories = obj.CheckTrajectories(frenetTrajectories, ob);
+            frenetTrajectories = obj.CheckTrajectories(frenetTrajectories, objects);
 
             % Find minimum cost trajectory
             mincost = inf;
@@ -174,6 +200,11 @@ classdef cOptimalFrenetPlanner
                     bestpath = ft;
                 end
             end
+            
+            collision = obj.CheckCollision(bestpath, objects);
+            %plot(bestpath.x, bestpath.y)
+            %plot(ox, oy, 'ro');
+            drawnow;
         end
 
 
