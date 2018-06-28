@@ -7,11 +7,12 @@ classdef cOptimalFrenetPlanner
         MAX_SPEED = 50.0 / 3.6  % maximum speed [m/s]
         MAX_ACCEL = 3.0  % maximum acceleration [m/ss]
         MAX_CURVATURE = 2.0  % maximum curvature [1/m]
-        MAX_ROAD_WIDTH = 15.0  % maximum road width [m]
-        D_ROAD_W = 0.8  % road width sampling length [m]
-        DT = 0.2  % time tick [s]
-        MAXT = 5.0  % max prediction time [m]
-        MINT = 4.0  % min prediction time [m]
+        MAX_ROAD_WIDTH = 10.0  % maximum road width [m]
+        MIN_ROAD_WIDTH = -1.0  % maximum road width [m]
+        D_ROAD_W = 1  % road width sampling length [m]
+        DT = 0.3  % time tick to sample a polynomial and the target time [s]
+        MAXT = 5.0  % max prediction time [s]
+        MINT = 4.0  % min prediction time [s]
         TARGET_SPEED = 30.0 / 3.6  % target speed [m/s]
         D_T_S = 5.0 / 3.6  % target speed sampling length [m/s]
         N_S_SAMPLE = 1  % sampling number of target speed
@@ -21,7 +22,7 @@ classdef cOptimalFrenetPlanner
         KJ = 0.1   % Jerk
         KT = 0.1   % Time
         KD = 1.0   % Distance from reference path
-        KV = 0.5   % Target speed
+        KV = 1.0   % Target speed
         KLAT = 1.0 % Lateral
         KLON = 1.0 % Longitudinal
         
@@ -30,23 +31,44 @@ classdef cOptimalFrenetPlanner
     
     methods (Access = public)
         
-        function frenetTrajectories = CalcFrenetTrajectories(obj, v, d, dd, ddd, s0)
-            
+        % \brief    Calculate trajectories in the frenet space
+        % \details  Use the given start dynamics and generate trajectory variations
+        %           by sampling 
+        %           - The lateral position -max_road_width:delta_road_width:max_road_width 
+        %           s0:     Longitudinal start position
+        %           ds0:    Initial longitudinal velocity
+        %           d0:     Lateral start position (offset from reference path)
+        %           dd0:    Initial lateral velocity
+        %           dd0:    Initial lateral acceleration
+        function frenetTrajectories = CalcFrenetTrajectories(obj, s0, ds0, d0, dd0, ddd0)
             % Generate path for each offset goal
             % Lateral sampling space
-            sizeLatSampleSpace = length(-obj.MAX_ROAD_WIDTH:obj.D_ROAD_W:obj.MAX_ROAD_WIDTH);
+            sizeLatSampleSpace = length(obj.MIN_ROAD_WIDTH:obj.D_ROAD_W:obj.MAX_ROAD_WIDTH);
             sizeTimeSpace = length(obj.MINT:obj.DT:obj.MAXT);
             sizeLonSampleSpace = length((obj.TARGET_SPEED - obj.D_T_S * obj.N_S_SAMPLE):obj.D_T_S:(obj.TARGET_SPEED + obj.D_T_S * obj.N_S_SAMPLE));
             numberTrajectories = sizeLatSampleSpace*sizeTimeSpace*sizeLonSampleSpace;
             frenetTrajectories = cell(1, numberTrajectories);
             iTraj = 1;
-            for di = -obj.MAX_ROAD_WIDTH:obj.D_ROAD_W:obj.MAX_ROAD_WIDTH
+            for di = obj.MIN_ROAD_WIDTH:obj.D_ROAD_W:obj.MAX_ROAD_WIDTH
                 % Lateral motion planning
                 for Ti = obj.MINT:obj.DT:obj.MAXT
+                    
+                    % Generate quintic polynomial for lateral plan using
+                    % the dynamics
+                    % d0: start positon offset
+                    % dd0: start lateral velocity
+                    % ddd0: start lateral acceleration
+                    % di: Variated lateral target lateral position
+                    % ddT: Lateral target velocity
+                    % dddT: Lateral target acceleration
+                    ddT = 0.0;
+                    dddT = 0.0;
+                    latPoly5 = cQuinticPoly(d0, dd0, ddd0, di, ddT, dddT, Ti);
+                    
+                    % Create a frenet trajectory consisting of 
+                    % s (longitudinal) and d (lateral) dynamics
+                    % and initialize the lateral (d) part 
                     ft = cFrenetTrajectory();
-                    
-                    latPoly5 = cQuinticPoly(d, dd, ddd, di, 0.0, 0.0, Ti);
-                    
                     ft.t = 0.0:obj.DT:Ti;
                     ft.d = latPoly5.X(ft.t);
                     ft.dd = latPoly5.dX(ft.t);
@@ -58,7 +80,7 @@ classdef cOptimalFrenetPlanner
                         targetft = ft;
                         %lonPoly5 = cQuinticPoly(s0, v, 0.0, tv, 0.0, 0.0, Ti);
                         %lonPoly5 = cQuinticPoly(s0, v, 0.0, s0+tv, 0.0, 0.0, Ti);
-                        lonPoly4 = cQuarticPoly(s0, v, 0.0, tv, 0.0, Ti);
+                        lonPoly4 = cQuarticPoly(s0, ds0, 0.0, tv, 0.0, Ti);
                         
                         targetft.s = lonPoly4.X(ft.t);
                         targetft.ds = lonPoly4.dX(ft.t);
@@ -66,15 +88,15 @@ classdef cOptimalFrenetPlanner
                         targetft.ddds = lonPoly4.dddX(ft.t);
                         
                         % Square of lateral jerk
-                        Jp = sum(targetft.dddd.^2);
+                        Jd = sum(targetft.dddd.^2);
                         % Square of longitudinal jerk
                         Js = sum(targetft.ddds.^2);
                         
                         % Square of diff from target speed
-                        ds = (obj.TARGET_SPEED - targetft.ds(end)).^2;
+                        dv = (obj.TARGET_SPEED - targetft.ds(end)).^2;
                         
-                        targetft.Jd = obj.KJ * Jp + obj.KT * Ti + obj.KD * targetft.d(end)^2;
-                        targetft.Js = obj.KJ * Js + obj.KT * Ti + obj.KV * ds;
+                        targetft.Jd = obj.KJ * Jd + obj.KT * Ti + obj.KD * targetft.d(end)^2;
+                        targetft.Js = obj.KJ * Js + obj.KT * Ti + obj.KV * dv;
                         targetft.J = obj.KLAT * targetft.Jd + obj.KLON * targetft.Js;
                         
                         frenetTrajectories{iTraj} = targetft;
@@ -99,7 +121,10 @@ classdef cOptimalFrenetPlanner
                     fy = iy + di * sin(iyaw + pi / 2.0);
                     ft.x(end+1) = fx;
                     ft.y(end+1) = fy;
+                    
                 end
+                plot(ft.x, ft.y, 'color', [1, 1, 1]*0.5)
+                drawnow;
 
                 % calc theta and dL (running length)
                 for i = 1:(length(ft.x) - 1)
@@ -148,9 +173,9 @@ classdef cOptimalFrenetPlanner
                 end
                 collision = any(d <= obj.ROBOT_RADIUS^2);
                 if collision
-                    %plot(ft.x, ft.y)
-                    %plot(ox, oy, 'ro');
-                    %drawnow;
+                    plot(ft.x, ft.y, 'rx')
+                    plot(ox, oy, 'yo');
+                    drawnow;
                     return;
                 end
                 
@@ -176,17 +201,22 @@ classdef cOptimalFrenetPlanner
                 elseif obj.CheckCollision(ft, objects)
                     continue
                 end
+%                 if obj.CheckCollision(ft, objects)
+%                     continue
+%                 end
 
                 okTrajectories{end+1} = ft;
+                plot(ft.x, ft.y, 'g');
+                drawnow;
             end
         end
 
 
-        function bestpath = FrenetOptimalPlanning(obj, referencePath, s0, c_speed, c_d, c_d_d, c_d_dd, objects)
+        function bestpath = FrenetOptimalPlanning(obj, referencePath, s0, ds0, d0, dd0, ddd0, objects)
             % Initialization
             obj.numberObjects = size(objects, 1);
             
-            frenetTrajectories = obj.CalcFrenetTrajectories(c_speed, c_d, c_d_d, c_d_dd, s0);
+            frenetTrajectories = obj.CalcFrenetTrajectories(s0, ds0, d0, dd0, ddd0);
             frenetTrajectories = obj.CalcGlobalTrajectories(frenetTrajectories, referencePath);
             frenetTrajectories = obj.CheckTrajectories(frenetTrajectories, objects);
 
