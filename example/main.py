@@ -1,9 +1,7 @@
-# main.py
 import sys
-#from PySide2.QtUiTools import QUiLoader
 from PySide2.QtWidgets import QApplication
 #from PySide2.QtCore import QFile
-import mainwindow as mw
+import frenet_main_window as fmw
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
@@ -13,9 +11,9 @@ if __name__ == "__main__":
 
     #loader = QUiLoader()
     #window = loader.load(file)
-    print("create Frenet Main window")
-    window = mw.FrenetMainWindow()
+    print("Create Frenet Main Window")
+    oFrenetMainWindow = fmw.FrenetMainWindow()
 
-    window.show()
+    oFrenetMainWindow.show()
 
     sys.exit(app.exec_())

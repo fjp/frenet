@@ -7,18 +7,19 @@ from matplotlib.figure import Figure
 
 # Matplotlib canvas class to create figure
 class MplCanvas(Canvas):
-    def __init__(self):
+    def __init__(self, position):
         self.fig = Figure()
-        self.ax = self.fig.add_subplot(111)
+        self.ax = self.fig.add_subplot(position)
         Canvas.__init__(self, self.fig)
         Canvas.setSizePolicy(self, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         Canvas.updateGeometry(self)
 
 # Matplotlib widget
-class MplDynamicsWidget(QtWidgets.QWidget):
-    def __init__(self, parent=None):
+class MplWidget(QtWidgets.QWidget):
+    def __init__(self, parent=None, position=111):
+        print("new MplWidget", parent)
         QtWidgets.QWidget.__init__(self, parent)   # Inherit from QWidget
-        self.canvas = MplCanvas()                  # Create canvas object
+        self.canvas = MplCanvas(position)                  # Create canvas object
         self.vbl = QtWidgets.QVBoxLayout()         # Set box for plotting
         self.vbl.addWidget(self.canvas)
         self.setLayout(self.vbl)

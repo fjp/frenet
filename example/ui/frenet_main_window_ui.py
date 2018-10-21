@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'mainwindow.ui'
+# Form implementation generated from reading ui file 'ui/frenet_main_window.ui'
 #
-# Created: Sun Oct 21 14:53:04 2018
+# Created: Sun Oct 21 16:58:32 2018
 #      by: pyside2-uic 2.0.0 running on PySide2 5.6.0~a1
 #
 # WARNING! All changes made in this file will be lost!
@@ -171,7 +171,7 @@ class Ui_MainWindow(object):
         self.pb_set_long.setText(QtWidgets.QApplication.translate("MainWindow", "Set Longitudinal", None, -1))
         self.pb_set_lat.setText(QtWidgets.QApplication.translate("MainWindow", "Set Lateral", None, -1))
 
-from mpldynamicswidget import MplDynamicsWidget
+from widgets.dynamics_widget import MplDynamicsWidget
 
 if __name__ == "__main__":
     import sys
