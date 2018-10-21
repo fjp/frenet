@@ -13,13 +13,18 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="MplDynamicsWidget" name="centralwidget">
+  <widget class="QWidget" name="centralwidget">
    <property name="sizePolicy">
     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
      <horstretch>0</horstretch>
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
+   <layout class="QVBoxLayout" name="verticalLayout_3">
+    <item>
+     <widget class="DynamicsWidget" name="dynamics_widget" native="true"/>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -39,7 +44,7 @@
    <attribute name="dockWidgetArea">
     <number>1</number>
    </attribute>
-   <widget class="QWidget" name="dockWidgetContents_6">
+   <widget class="QWidget" name="dwc_dynamics">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QGroupBox" name="gb_Start">
@@ -122,29 +127,6 @@
     </layout>
    </widget>
   </widget>
-  <widget class="QDockWidget" name="dockWidget_7">
-   <attribute name="dockWidgetArea">
-    <number>8</number>
-   </attribute>
-   <widget class="QWidget" name="dockWidgetContents_7"/>
-  </widget>
-  <widget class="QDockWidget" name="dockWidget_9">
-   <attribute name="dockWidgetArea">
-    <number>2</number>
-   </attribute>
-   <widget class="QWidget" name="dockWidgetContents_9">
-    <widget class="MplDynamicsWidget" name="plotWidget2" native="true">
-     <property name="geometry">
-      <rect>
-       <x>26</x>
-       <y>110</y>
-       <width>160</width>
-       <height>184</height>
-      </rect>
-     </property>
-    </widget>
-   </widget>
-  </widget>
   <widget class="QDockWidget" name="dw_settings">
    <property name="windowTitle">
     <string>Settings</string>
@@ -152,7 +134,7 @@
    <attribute name="dockWidgetArea">
     <number>1</number>
    </attribute>
-   <widget class="QWidget" name="dockWidgetContents_10">
+   <widget class="QWidget" name="dwc_settings">
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QGroupBox" name="gb_time_settings">
@@ -199,11 +181,11 @@
     </layout>
    </widget>
   </widget>
-  <widget class="QDockWidget" name="dockWidget">
+  <widget class="QDockWidget" name="dw_polynomials">
    <attribute name="dockWidgetArea">
     <number>1</number>
    </attribute>
-   <widget class="QWidget" name="dockWidgetContents">
+   <widget class="QWidget" name="dwc_polynomials">
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
       <widget class="QGroupBox" name="gb_set_polynomials">
@@ -231,12 +213,30 @@
     </layout>
    </widget>
   </widget>
+  <widget class="QDockWidget" name="dw_path">
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dwc_path">
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <widget class="PathWidget" name="path_widget" native="true"/>
+     </item>
+    </layout>
+   </widget>
+  </widget>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>MplDynamicsWidget</class>
+   <class>DynamicsWidget</class>
    <extends>QWidget</extends>
    <header location="global">./widgets/dynamics_widget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PathWidget</class>
+   <extends>QWidget</extends>
+   <header>./widgets/path_widget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
