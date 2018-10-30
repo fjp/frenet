@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui/frenet_main_window.ui'
+# Form implementation generated from reading ui file 'gui/ui/frenet_main_window.ui'
 #
-# Created: Sun Oct 21 19:19:23 2018
+# Created: Wed Oct 24 23:29:10 2018
 #      by: pyside2-uic 2.0.0 running on PySide2 5.6.0~a1
 #
 # WARNING! All changes made in this file will be lost!
@@ -53,6 +53,7 @@ class Ui_MainWindow(object):
         self.lbl_v0.setObjectName("lbl_v0")
         self.gridLayout_2.addWidget(self.lbl_v0, 1, 0, 1, 1)
         self.dsb_v0 = QtWidgets.QDoubleSpinBox(self.gb_Start)
+        self.dsb_v0.setProperty("value", 10.0)
         self.dsb_v0.setObjectName("dsb_v0")
         self.gridLayout_2.addWidget(self.dsb_v0, 1, 1, 1, 1)
         self.lbl_a0 = QtWidgets.QLabel(self.gb_Start)
@@ -70,12 +71,14 @@ class Ui_MainWindow(object):
         self.lbl_stau.setObjectName("lbl_stau")
         self.gridLayout_3.addWidget(self.lbl_stau, 0, 0, 1, 1)
         self.dsb_stau = QtWidgets.QDoubleSpinBox(self.gb_End)
+        self.dsb_stau.setProperty("value", 50.0)
         self.dsb_stau.setObjectName("dsb_stau")
         self.gridLayout_3.addWidget(self.dsb_stau, 0, 1, 1, 1)
         self.lbl_vtau = QtWidgets.QLabel(self.gb_End)
         self.lbl_vtau.setObjectName("lbl_vtau")
         self.gridLayout_3.addWidget(self.lbl_vtau, 1, 0, 1, 1)
         self.dsb_vtau = QtWidgets.QDoubleSpinBox(self.gb_End)
+        self.dsb_vtau.setProperty("value", 10.0)
         self.dsb_vtau.setObjectName("dsb_vtau")
         self.gridLayout_3.addWidget(self.dsb_vtau, 1, 1, 1, 1)
         self.lbl_atau = QtWidgets.QLabel(self.gb_End)
@@ -101,6 +104,7 @@ class Ui_MainWindow(object):
         self.lbl_tau.setObjectName("lbl_tau")
         self.gridLayout.addWidget(self.lbl_tau, 0, 0, 1, 1)
         self.dsb_tau = QtWidgets.QDoubleSpinBox(self.gb_time_settings)
+        self.dsb_tau.setProperty("value", 5.0)
         self.dsb_tau.setObjectName("dsb_tau")
         self.gridLayout.addWidget(self.dsb_tau, 0, 1, 1, 1)
         self.lbl_s0_2 = QtWidgets.QLabel(self.gb_time_settings)
@@ -113,6 +117,7 @@ class Ui_MainWindow(object):
         self.lbl_s0_3.setObjectName("lbl_s0_3")
         self.gridLayout.addWidget(self.lbl_s0_3, 2, 0, 1, 1)
         self.dsb_sampling_rate = QtWidgets.QDoubleSpinBox(self.gb_time_settings)
+        self.dsb_sampling_rate.setProperty("value", 0.01)
         self.dsb_sampling_rate.setObjectName("dsb_sampling_rate")
         self.gridLayout.addWidget(self.dsb_sampling_rate, 2, 1, 1, 1)
         self.verticalLayout.addWidget(self.gb_time_settings)
@@ -173,8 +178,8 @@ class Ui_MainWindow(object):
         self.pb_set_long.setText(QtWidgets.QApplication.translate("MainWindow", "Set Longitudinal", None, -1))
         self.pb_set_lat.setText(QtWidgets.QApplication.translate("MainWindow", "Set Lateral", None, -1))
 
-from widgets.dynamics_widget import DynamicsWidget
 from widgets.path_widget import PathWidget
+from widgets.dynamics_widget import DynamicsWidget
 
 if __name__ == "__main__":
     import sys

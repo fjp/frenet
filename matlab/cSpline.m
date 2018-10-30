@@ -70,7 +70,7 @@ classdef cSpline
 
             i = obj.search_index(t);
             dx = t - obj.x(i);
-            result = obj.a(i) + obj.b(i)*dx + obj.c(i)*dx^2.0 + obj.d(i)*dx^3.0;
+            result = obj.a(i) + obj.b(i)*dx + obj.c(i)*dx.^2.0 + obj.d(i)*dx.^3.0;
         end
 
         function result = calcd(obj, t)

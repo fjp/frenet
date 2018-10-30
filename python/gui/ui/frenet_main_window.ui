@@ -70,7 +70,11 @@
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QDoubleSpinBox" name="dsb_v0"/>
+         <widget class="QDoubleSpinBox" name="dsb_v0">
+          <property name="value">
+           <double>10.000000000000000</double>
+          </property>
+         </widget>
         </item>
         <item row="2" column="0">
          <widget class="QLabel" name="lbl_a0">
@@ -99,7 +103,11 @@
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QDoubleSpinBox" name="dsb_stau"/>
+         <widget class="QDoubleSpinBox" name="dsb_stau">
+          <property name="value">
+           <double>50.000000000000000</double>
+          </property>
+         </widget>
         </item>
         <item row="1" column="0">
          <widget class="QLabel" name="lbl_vtau">
@@ -109,7 +117,11 @@
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QDoubleSpinBox" name="dsb_vtau"/>
+         <widget class="QDoubleSpinBox" name="dsb_vtau">
+          <property name="value">
+           <double>10.000000000000000</double>
+          </property>
+         </widget>
         </item>
         <item row="2" column="0">
          <widget class="QLabel" name="lbl_atau">
@@ -153,7 +165,11 @@
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QDoubleSpinBox" name="dsb_tau"/>
+         <widget class="QDoubleSpinBox" name="dsb_tau">
+          <property name="value">
+           <double>5.000000000000000</double>
+          </property>
+         </widget>
         </item>
         <item row="1" column="0">
          <widget class="QLabel" name="lbl_s0_2">
@@ -173,7 +189,11 @@
          </widget>
         </item>
         <item row="2" column="1">
-         <widget class="QDoubleSpinBox" name="dsb_sampling_rate"/>
+         <widget class="QDoubleSpinBox" name="dsb_sampling_rate">
+          <property name="value">
+           <double>0.010000000000000</double>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
