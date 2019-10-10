@@ -1,5 +1,13 @@
 # Frenet
 
+Path planning in frenet coordinates:
+
+<figure>
+    <a href="/python/optimal_frenet.gif"><img src="/python/optimal_frenet.gif"></a>
+    <figcaption>Path Planning using frenet coordinates.</figcaption>
+</figure>
+
+
 ## Algorithm
 
 1. **Determine the trajectory start state** \[x1,x2,theta,kappa,v,a\](0)
