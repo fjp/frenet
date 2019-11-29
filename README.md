@@ -54,6 +54,11 @@ Allows you to generate trajectories in a local (world) reference frame from two 
 One polynomial describes the longitudinal direction and the other one the lateral. 
 Providing a reference path and applying the Frenet coordinate transformation on this path will result in a trajectory.
 
+Execute `frenet.sh` run the GUI. This will call `uic` (Qt's user interface compiler) to process the `ui` file. 
+Afterwards the `main.py` will be executed.
+
+### Dependencies
+
 The GUI was created with python3 in a conda environment:
 
 ```
@@ -63,10 +68,14 @@ conda install -c conda-forge pyside2
 conda install -c conda-forge matplotlib
 ```
 
-Execute `frenet.sh` run the GUI. This will call `uic` (Qt's user interface compiler) to process the `ui` file. 
-Afterwards the `main.py` will be executed.
+You can use the provided [environment.yml](environment.yml) to create a conda environment with the required dependendies:
 
-### References
+```
+conda create --name <env-name> --file environment.yml
+conda activate <env-name>
+```
+
+## References
 
 - [Optimal Trajectory Generation for Dynamic Street Scenarios in a Frenet Frame](https://www.researchgate.net/profile/Moritz_Werling/publication/224156269_Optimal_Trajectory_Generation_for_Dynamic_Street_Scenarios_in_a_Frenet_Frame/links/54f749df0cf210398e9277af.pdf)
 - [Dissertation](https://www.ksp.kit.edu/download/1000021738)
