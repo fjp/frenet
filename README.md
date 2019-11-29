@@ -1,4 +1,4 @@
-# Frenet
+# Trajectory Planning in the Frenet Space
 
 Path planning in frenet coordinates:
 
@@ -6,7 +6,6 @@ Path planning in frenet coordinates:
     <a href="/python/optimal_frenet.gif"><img src="/python/optimal_frenet.gif"></a>
     <figcaption>Path Planning using frenet coordinates.</figcaption>
 </figure>
-
 
 ## Algorithm
 
@@ -40,6 +39,31 @@ collisions are avoided. The trajectory with the lowest cost is then selected.
 Using the sign based (in the beginning) jerk da(0), the trajectory with the
 strongest decceleration or the trajectory which accelerates the least respectively 
 is selected and passed to the controller.
+
+## Usage
+
+### Jupyter Notebook
+
+In the python folder you find a Jupyter Notebook which shows the described planning algorithm.
+
+### Frenet GUI
+
+Note: The Frenet GUI is not functional yet. Contributions are welcome. Here's the plan for this GUI:
+
+Allows you to generate trajectories in a local (world) reference frame from two quintic polynomials.
+One polynomial describes the longitudinal direction and the other one the lateral. 
+Providing a reference path and applying the Frenet coordinate transformation on this path will result in a trajectory.
+
+The GUI was created with python3 in a conda environment:
+
+```
+conda create -n frenetenv python=3.6
+pip install PySide2
+pip install matplotlib
+```
+
+Execute `frenet.sh` run the GUI. This will call `uic` (Qt's user interface compiler) to process the `ui` file. 
+Afterwards the `main.py` will be executed.
 
 ### References
 
