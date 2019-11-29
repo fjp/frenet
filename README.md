@@ -4,7 +4,7 @@ Path planning in frenet coordinates:
 
 <figure>
     <a href="/python/optimal_frenet.gif"><img src="/python/optimal_frenet.gif"></a>
-    <figcaption>Path Planning using frenet coordinates.</figcaption>
+    <figcaption>Trajectory Planning using frenet coordinates.</figcaption>
 </figure>
 
 ## Algorithm
