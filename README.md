@@ -58,8 +58,9 @@ The GUI was created with python3 in a conda environment:
 
 ```
 conda create -n frenetenv python=3.6
-pip install PySide2
-pip install matplotlib
+conda activate frenetenv
+conda install -c conda-forge pyside2
+conda install -c conda-forge matplotlib
 ```
 
 Execute `frenet.sh` run the GUI. This will call `uic` (Qt's user interface compiler) to process the `ui` file. 
