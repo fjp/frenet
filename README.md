@@ -57,7 +57,7 @@ The image below depicts a curvy road with a Cartesian coordinate system laid on 
 
 <figure>
     <a href="/assets/collections/fpv/frame-components.jpg"><img src="/assets/collections/fpv/frame-components.jpg"></a>
-    <figcaption>Representation of a reference path in Cartesian coordinates.</figcaption>
+    <figcaption>Representation of a reference path in Cartesian coordinates (x,d).</figcaption>
 </figure>
 
 
@@ -65,8 +65,27 @@ The next image shows the same reference path together with its Frenet coordinate
 
 <figure>
     <a href="/assets/collections/fpv/frame-components.jpg"><img src="/assets/collections/fpv/frame-components.jpg"></a>
-    <figcaption>Representation of a reference path in Cartesian coordinates.</figcaption>
+    <figcaption>Representation of a reference path in Frenet coordinates (s,d) on a road segment.</figcaption>
 </figure>
+
+The s coordinate represents the run length and starts with s = 0 at the beginning of the reference path.
+Lateral positions relative to the reference path are are represented with the d coordinate. 
+Positions on the reference path are represented with d = 0. d is positive to the left of the reference path and 
+negative on the right of it, although this depends on the convention used for the local reference frame.
+
+The image above shows that curved reference paths (such as curvy roads) are represented as straight lines on the
+s axis in Frenet coordinates. However, motions that do not follow the reference path exactly result in non straight
+motions in Frenet coordinates. Instead such motions result in an offset from the reference path and therefore the s axis, 
+which is described with the d coordinate. The following image shows the two different representations (Cartesian vs Frenet).
+
+<figure>
+    <a href="/assets/collections/fpv/frame-components.jpg"><img src="/assets/collections/fpv/frame-components.jpg"></a>
+    <figcaption>Comparison of a planned trajectory in Cartesian and Frenet coordinates.</figcaption>
+</figure>
+
+To use Frenet coordinates it is required to have a continouosly smooth reference path. 
+
+### Reference Path
 
 ## Usage
 
