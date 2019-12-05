@@ -87,6 +87,12 @@ To use Frenet coordinates it is required to have a continouosly smooth reference
 
 ### Reference Path
 
+Frenet coordinates provide a mathematically simpler representation of a reference path, 
+because its run length is described with the s axis. This reference path provides a rough reference
+to follow an arbitrary but curvature continuous course of the road. To avoid collisions, 
+the planner must take care of other objects in the environment, either static or dynamic. 
+Such objects are usually not avoided by the reference path.
+
 ## Usage
 
 ### Jupyter Notebook
