@@ -96,8 +96,29 @@ Such objects are usually not avoided by the reference path.
 A reference path can be represented in two different forms although for all representations a run length information,
 which represents the s axis, is required for the transformation.
 
-- Clothoid x(l) = c0 + c1*l
-- Polyline
+- Polynome
+- Spline (multiple polynomes)
+- Clothoid (special polynome)
+- Polyline (single points with run length information)
+
+#### Clothoid
+
+x(l) = c0 + c1*l
+
+#### Polyline
+
+
+### Transformation
+
+The transformation from local vehicle coordinates to Frenet coordinates is based on the relations shown in the following image:
+
+<figure>
+    <a href="/assets/collections/fpv/frame-components.jpg"><img src="/assets/collections/fpv/frame-components.jpg"></a>
+    <figcaption>Transformation vehicle frame to Frenet frame.</figcaption>
+</figure>
+
+
+
 
 ## Usage
 
