@@ -93,6 +93,12 @@ to follow an arbitrary but curvature continuous course of the road. To avoid col
 the planner must take care of other objects in the environment, either static or dynamic. 
 Such objects are usually not avoided by the reference path.
 
+A reference path can be represented in two different forms although for all representations a run length information,
+which represents the s axis, is required for the transformation.
+
+- Clothoid
+- Polyline
+
 ## Usage
 
 ### Jupyter Notebook
