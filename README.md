@@ -96,7 +96,7 @@ Such objects are usually not avoided by the reference path.
 A reference path can be represented in two different forms although for all representations a run length information,
 which represents the s axis, is required for the transformation.
 
-- Clothoid
+- Clothoid x(l) = c0 + c1*l
 - Polyline
 
 ## Usage
