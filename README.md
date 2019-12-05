@@ -40,6 +40,27 @@ Using the sign based (in the beginning) jerk da(0), the trajectory with the
 strongest decceleration or the trajectory which accelerates the least respectively 
 is selected and passed to the controller.
 
+# Frenet Coordinates
+
+"Frenet Coordinates", are a way of representing position on a road in a more intuitive way than traditional (x,y)
+Cartesian Coordinates. 
+
+With Frenet coordinates, we use the variables s and d to describe a vehicle's position on the road or a reference path. 
+The s coordinate represents distance along the road (also known as longitudinal displacement) and the d coordinate represents side-to-side position on the road (relative to the reference path), and is also known as lateral displacement.
+
+In the following sections the advantages and disadvantages of Frenet coordinates are compared to the Cartesian coordinates.
+
+## Frenet Features
+
+The image below depicts a curvy road with a Cartesian coordinate system laid on top of it, as well as a curved
+(continuously curved) reference path (for example the middle of the road).
+
+<figure>
+    <a href="/assets/collections/fpv/frame-components.jpg"><img src="/assets/collections/fpv/frame-components.jpg"></a>
+    <figcaption>Representation of a reference path in Cartesian coordinates.</figcaption>
+</figure>
+
+
 ## Usage
 
 ### Jupyter Notebook
