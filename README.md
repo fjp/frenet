@@ -61,6 +61,13 @@ The image below depicts a curvy road with a Cartesian coordinate system laid on 
 </figure>
 
 
+The next image shows the same reference path together with its Frenet coordinates.
+
+<figure>
+    <a href="/assets/collections/fpv/frame-components.jpg"><img src="/assets/collections/fpv/frame-components.jpg"></a>
+    <figcaption>Representation of a reference path in Cartesian coordinates.</figcaption>
+</figure>
+
 ## Usage
 
 ### Jupyter Notebook
