@@ -117,7 +117,8 @@ The transformation from local vehicle coordinates to Frenet coordinates is based
     <figcaption>Transformation vehicle frame to Frenet frame.</figcaption>
 </figure>
 
-
+Given a point P_C in the vehicle frame search for the closest point R_C on the reference path. 
+The run length of R_C, which is known from the reference path points, 
 
 
 ## Usage
