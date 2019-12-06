@@ -126,6 +126,8 @@ If the reference path is sufficiently smooth (continuously differentiable) then 
 to the reference path at the point $R_C$. The signed length of $\vec{PR}$ determines the d coordinate of $P_F$.
 The sign is positive, if $P_C$ lies on the left along the run lenght of the reference path.
 
+The procedure to transform a point $P_F$ from Frenet coordinates to the local vehicle frame in Cartesian coordinates is analogous.
+
 
 ## Usage
 
