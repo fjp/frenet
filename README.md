@@ -123,7 +123,8 @@ Given a point $P_C$ in the vehicle frame search for the closest point $R_C$ on t
 The run length of $R_C$, which is known from the reference path points, 
 determins the s coordinate of the transformed point $P_F$.
 If the reference path is sufficiently smooth (continuously differentiable) then the vector $\vec{PR}$ is orthogonal
-to the reference path at the point $R_C$.
+to the reference path at the point $R_C$. The signed length of $\vec{PR}$ determines the d coordinate of $P_F$.
+The sign is positive, if $P_C$ lies to the left along the run lenght of the reference path.
 
 
 ## Usage
