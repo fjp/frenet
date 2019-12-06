@@ -118,7 +118,8 @@ The transformation from local vehicle coordinates to Frenet coordinates is based
 </figure>
 
 Given a point P_C in the vehicle frame search for the closest point R_C on the reference path. 
-The run length of R_C, which is known from the reference path points, 
+The run length of R_C, which is known from the reference path points, determins the s coordinate of the transformed point P_F.
+
 
 
 ## Usage
