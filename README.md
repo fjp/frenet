@@ -1,5 +1,9 @@
 # Trajectory Planning in the Frenet Space
 
+There are many ways to plan a trajectory for a robot. A trajectory can be seen as a set of time ordered state vectors $x$.
+The following algorithm introduces a way to plan trajectories to maneuver a mobile robot in a 2D plane.
+It is specifically useful for structured environments, like highways, where a rough path, referred to as reference, is available a priori.
+
 Path planning in frenet coordinates:
 
 <figure>
@@ -9,17 +13,17 @@ Path planning in frenet coordinates:
 
 ## Algorithm
 
-1. **Determine the trajectory start state** \[x1,x2,theta,kappa,v,a\](0)
+1. **Determine the trajectory start state** $\[x_1,x_2,\theta,\kappa,v,a\](0)$
 The trajectory start state is obtained by evaluating the previously calculated trajectory
 at the prospective start state (low-level-stabilization). 
 At system initialization and after reinitialization, the current vehicle 
 position is used instead (high-level-stabilization).
 2. **Selection of the lateral mode**
-Depending on the velocity v the time based (d(t)) or running length / arc length based (d(s))
+Depending on the velocity $v$ the time based ($d(t)$) or running length / arc length based ($d(s)$)
 lateral planning mode is activated. By projecting the start state onto the reference curve the
-the longitudinal start position s(0) is determined. The frenet state vector 
-\[s,ds,dds,d,d',d''\](0) can be determined using the frenet transformation.
-For the time based lateral planning mode, \[dd, ddd\](0) need to be calculated.
+the longitudinal start position $s(0)$ is determined. The frenet state vector 
+$\[s,\dot{s},\ddot{s},d,d',d''\](0)$ can be determined using the frenet transformation.
+For the time based lateral planning mode, $\[\dot{d}, \ddot{d}\](0)$ need to be calculated.
 3. **Generating the laterl and longitudinal trajectories**
 Trajectories including their costs are generated for the lateral (mode dependent) 
 as well as the longitudinal motion (velocity keeping, vehicle following / distance keeping) in the frenet space.
@@ -27,7 +31,7 @@ In this stage, trajectories with high lateral accelerations with respect to the 
 path can be neglected to improve the computational performance.
 4. **Combining lateral and longitudinal trajectories**
 Summing the partial costs of lateral and longitduinal costs using
-J(d(t),s(t)) = Jd(d(t)) + ks*Js(s(t)), for all active longidtuinal mode every
+$J(d(t),s(t)) = J_d(d(t)) + k_s \cdot J_s(s(t))$, for all active longidtuinal mode every
 longitudinal trajectory is combined with every lateral trajectory and transfromed
 back to world coordinates using the reference path. The trajectories are verified if they obey physical driving limits by
 subsequent point wise evaluation of curvature and acceleration. 
@@ -36,7 +40,7 @@ This leads to a set of potentially drivable maneuvers of a specific mode in worl
 Every trajectory set is evaluated with increasing total costs if static and dynamic 
 collisions are avoided. The trajectory with the lowest cost is then selected.
 6. **Longitudinal mode alternation**
-Using the sign based (in the beginning) jerk da(0), the trajectory with the
+Using the sign based (in the beginning) jerk $\dot{a}(0)$, the trajectory with the
 strongest decceleration or the trajectory which accelerates the least respectively 
 is selected and passed to the controller.
 
@@ -103,7 +107,9 @@ which represents the s axis, is required for the transformation.
 
 #### Clothoid
 
+$$
 x(l) = c0 + c1*l
+$$
 
 #### Polyline
 
@@ -117,8 +123,21 @@ The transformation from local vehicle coordinates to Frenet coordinates is based
     <figcaption>Transformation vehicle frame to Frenet frame.</figcaption>
 </figure>
 
-Given a point P_C in the vehicle frame search for the closest point R_C on the reference path. 
-The run length of R_C, which is known from the reference path points, 
+Given a point $P_C$ in the vehicle frame search for the closest point $R_C$ on the reference path. 
+The run length of $R_C$, which is known from the reference path points, 
+determins the s coordinate of the transformed point $P_F$.
+If the reference path is sufficiently smooth (continuously differentiable) then the vector $\vec{PR}$ is orthogonal
+to the reference path at the point $R_C$. The signed length of $\vec{PR}$ determines the d coordinate of $P_F$.
+The sign is positive, if $P_C$ lies on the left along the run lenght of the reference path.
+
+The procedure to transform a point $P_F$ from Frenet coordinates to the local vehicle frame in Cartesian coordinates is analogous. First, the point $R_C$, which lies on the reference path at run length $s$. Next, a normal unit vector $\vec{d}$
+is determined, which, in this point, is orthogonal to the reference path. The direction of this vector points towards
+positive $d$ values and therefore points to the left with increasing run length $s$. 
+Therefore, the vector $\vec{d}$ depends on the run length, which leads to:
+
+$$
+P_C(s,d) = R_C(s) + d \cdot \vec{d}(s)
+$$
 
 
 ## Usage
