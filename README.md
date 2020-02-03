@@ -7,7 +7,7 @@ It is specifically useful for structured environments, like highways, where a ro
 Path planning in frenet coordinates:
 
 <figure>
-    <a href="/python/optimal_frenet.gif"><img src="/python/optimal_frenet.gif"></a>
+    <a href="https://raw.githubusercontent.com/fjp/frenet/master/docs/images/optimal_frenet.gif"><img src="https://raw.githubusercontent.com/fjp/frenet/master/docs/images/optimal_frenet.gif"></a>
     <figcaption>Trajectory Planning using frenet coordinates.</figcaption>
 </figure>
 
