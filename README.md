@@ -60,8 +60,8 @@ The image below depicts a curvy road with a Cartesian coordinate system laid on 
 (continuously curved) reference path (for example the middle of the road).
 
 <figure>
-    <a href="/assets/collections/fpv/frame-components.jpg"><img src="/assets/collections/fpv/frame-components.jpg"></a>
-    <figcaption>Representation of a reference path in Cartesian coordinates (x,d).</figcaption>
+    <a href="https://raw.githubusercontent.com/fjp/frenet/master/docs/images/cart_refpath.svg"><img src="https://raw.githubusercontent.com/fjp/frenet/master/docs/images/cart_refpath.svg"></a>
+    <figcaption>Representation of a reference path (blue) in Cartesian coordinates (x,d).</figcaption>
 </figure>
 
 
