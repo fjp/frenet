@@ -20,20 +20,24 @@ for i = 1:length(i_faRefX)
     end 
 end
 
-
-fRefXp1 = i_faRefX(o_nClosestRefPoint+1);
-fRefYp1 = i_faRefY(o_nClosestRefPoint+1);
-fDistp1 = Distance(i_fX, i_fY, fRefXp1, fRefYp1);
-
-fRefXm1 = i_faRefX(o_nClosestRefPoint-1);
-fRefYm1 = i_faRefY(o_nClosestRefPoint-1);
-fDistm1 = Distance(i_fX, i_fY, fRefXm1, fRefYm1);
-
-if(fDistm1 < fDistp1)
+if o_nClosestRefPoint == length(i_faRefX)
     o_nClosest2ndRefPoint = o_nClosestRefPoint - 1;
-else
+elseif o_nClosestRefPoint == 1
     o_nClosest2ndRefPoint = o_nClosestRefPoint + 1;
-end
+else
+    fRefXp1 = i_faRefX(o_nClosestRefPoint+1);
+    fRefYp1 = i_faRefY(o_nClosestRefPoint+1);
+    fDistp1 = Distance(i_fX, i_fY, fRefXp1, fRefYp1);
 
+    fRefXm1 = i_faRefX(o_nClosestRefPoint-1);
+    fRefYm1 = i_faRefY(o_nClosestRefPoint-1);
+    fDistm1 = Distance(i_fX, i_fY, fRefXm1, fRefYm1);
+
+    if(fDistm1 < fDistp1)
+        o_nClosest2ndRefPoint = o_nClosestRefPoint - 1;
+    else
+        o_nClosest2ndRefPoint = o_nClosestRefPoint + 1;
+    end
+end
 end
 
