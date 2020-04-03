@@ -29,11 +29,11 @@ classdef cQuinticPoly
         end
         
         function x = dX(obj, t)
-            x = obj.c(2) + obj.c(3).*t + 3*obj.c(4).*t.^2 + 4*obj.c(5).*t.^3 + 5*obj.c(6).*t.^4;   
+            x = obj.c(2) + 2*obj.c(3).*t + 3*obj.c(4).*t.^2 + 4*obj.c(5).*t.^3 + 5*obj.c(6).*t.^4;   
         end
         
         function x = ddX(obj, t)
-            x = obj.c(3) + 6*obj.c(4).*t + 12*obj.c(5).*t.^2 + 20*obj.c(6).*t.^3;   
+            x = 2*obj.c(3) + 6*obj.c(4).*t + 12*obj.c(5).*t.^2 + 20*obj.c(6).*t.^3;   
         end
         
         function x = dddX(obj, t)

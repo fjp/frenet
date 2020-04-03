@@ -27,11 +27,11 @@ classdef cQuarticPoly
         end
         
         function x = dX(obj, t)
-            x = obj.c(2) + obj.c(3).*t + 3*obj.c(4).*t.^2 + 4*obj.c(5).*t.^3;   
+            x = obj.c(2) + 2*obj.c(3).*t + 3*obj.c(4).*t.^2 + 4*obj.c(5).*t.^3;   
         end
         
         function x = ddX(obj, t)
-            x = obj.c(3) + 6*obj.c(4).*t + 12*obj.c(5).*t.^2;   
+            x = 2*obj.c(3) + 6*obj.c(4).*t + 12*obj.c(5).*t.^2;   
         end
         
         function x = dddX(obj, t)
