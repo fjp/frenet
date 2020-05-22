@@ -11,9 +11,9 @@
    sodipodi:docname="frenet_refpath.svg"
    id="svg8"
    version="1.1"
-   viewBox="0 0 251.9848 133.77023"
-   height="133.77023mm"
-   width="251.9848mm">
+   viewBox="0 0 305.76968 139.54202"
+   height="139.54202mm"
+   width="305.76968mm">
   <defs
      id="defs2">
     <marker
@@ -201,8 +201,8 @@
      inkscape:document-rotation="0"
      inkscape:current-layer="layer3"
      inkscape:document-units="mm"
-     inkscape:cy="163.78337"
-     inkscape:cx="507.55078"
+     inkscape:cy="166.14756"
+     inkscape:cx="549.71823"
      inkscape:zoom="1"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
@@ -216,8 +216,8 @@
      fit-margin-bottom="0">
     <inkscape:grid
        dotted="false"
-       originy="-35.740842"
-       originx="-7.0767708"
+       originy="-35.115316"
+       originx="4.080033"
        id="grid77"
        type="xygrid" />
   </sodipodi:namedview>
@@ -237,7 +237,7 @@
      inkscape:label="street"
      id="layer2"
      inkscape:groupmode="layer"
-     transform="translate(-7.0767708,-35.740844)">
+     transform="translate(4.080033,-35.115317)">
     <path
        id="rect902"
        style="fill:#a0a0a0;fill-opacity:1;fill-rule:evenodd;stroke-width:0.298268"
@@ -249,7 +249,7 @@
      id="layer1"
      inkscape:groupmode="layer"
      inkscape:label="vehicle"
-     transform="translate(-7.0767708,-35.740844)">
+     transform="translate(4.080033,-35.115317)">
     <path
        inkscape:connector-curvature="0"
        id="path904"
@@ -308,7 +308,7 @@
      inkscape:label="cs"
      id="layer3"
      inkscape:groupmode="layer"
-     transform="translate(-7.0767708,-35.740844)">
+     transform="translate(4.080033,-35.115317)">
     <g
        transform="rotate(-0.07001046,4552.9003,-86499.04)"
        id="g5275-1-2">
@@ -457,7 +457,7 @@
        sodipodi:nodetypes="cc"
        inkscape:connector-curvature="0"
        id="path194-7"
-       d="m 275.16667,169.33334 0,-127.000005"
+       d="M 275.16667,169.33334 V 42.333335"
        style="fill:none;stroke:#0000fb;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
     <text
        xml:space="preserve"
@@ -924,7 +924,7 @@
      inkscape:groupmode="layer"
      id="layer5"
      inkscape:label="refpath"
-     transform="translate(-7.0767708,-35.740844)">
+     transform="translate(4.080033,-35.115317)">
     <path
        style="fill:none;stroke:#0000fb;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 142.87509,169.33333 c 0,-52.91666 42.33333,-74.08333 42.33333,-126.999997"
