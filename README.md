@@ -83,7 +83,7 @@ motions in Frenet coordinates. Instead such motions result in an offset from the
 which is described with the d coordinate. The following image shows the two different representations (Cartesian vs Frenet).
 
 <figure>
-    <a href="/assets/collections/fpv/frame-components.jpg"><img src="/assets/collections/fpv/frame-components.jpg"></a>
+    <a href="https://raw.githubusercontent.com/fjp/frenet/master/docs/images/compare_cart_frenet.svg?sanitize=true"><img src="https://raw.githubusercontent.com/fjp/frenet/master/docs/images/compare_cart_frenet.svg?sanitize=true"></a>
     <figcaption>Comparison of a planned trajectory in Cartesian and Frenet coordinates.</figcaption>
 </figure>
 
