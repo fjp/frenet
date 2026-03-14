@@ -142,6 +142,41 @@ $$
 
 ## Usage
 
+### Python Package
+
+The Python package uses [uv](https://docs.astral.sh/uv/) for dependency management. To get started:
+
+```bash
+cd python
+uv sync
+```
+
+This creates a virtual environment and installs the `frenet` package with its dependencies (`numpy`, `matplotlib`).
+
+#### Frenet-Cartesian Transforms
+
+```python
+from frenet.cubic_spline_planner import Spline2D
+from frenet import frenet_to_cart, cart_to_frenet
+
+# Create a reference path from waypoints
+csp = Spline2D([0.0, 10.0, 20.0, 30.0], [0.0, 5.0, 0.0, 5.0])
+
+# Frenet to Cartesian
+x, y = frenet_to_cart(s=15.0, d=2.0, csp=csp)
+
+# Cartesian to Frenet
+s, d = cart_to_frenet(px=15.0, py=3.0, csp=csp)
+```
+
+#### Running Tests
+
+```bash
+cd python
+uv sync --extra dev
+uv run pytest
+```
+
 ### Jupyter Notebook
 
 In the python folder you find a Jupyter Notebook which shows the described planning algorithm.
@@ -151,28 +186,17 @@ In the python folder you find a Jupyter Notebook which shows the described plann
 Note: The Frenet GUI is not functional yet. Contributions are welcome. Here's the plan for this GUI:
 
 Allows you to generate trajectories in a local (world) reference frame from two quintic polynomials.
-One polynomial describes the longitudinal direction and the other one the lateral. 
+One polynomial describes the longitudinal direction and the other one the lateral.
 Providing a reference path and applying the Frenet coordinate transformation on this path will result in a trajectory.
 
-Execute `frenet.sh` run the GUI. This will call `uic` (Qt's user interface compiler) to process the `ui` file. 
+Execute `frenet.sh` run the GUI. This will call `uic` (Qt's user interface compiler) to process the `ui` file.
 Afterwards the `main.py` will be executed.
 
-### Dependencies
+To install the optional GUI dependency:
 
-The GUI was created with python3 in a conda environment:
-
-```
-conda create -n frenetenv python=3.6
-conda activate frenetenv
-conda install -c conda-forge pyside2
-conda install -c conda-forge matplotlib
-```
-
-You can use the provided [environment.yml](environment.yml) to create a conda environment with the required dependendies:
-
-```
-conda create --name <env-name> --file environment.yml
-conda activate <env-name>
+```bash
+cd python
+uv sync --extra gui
 ```
 
 ## References
