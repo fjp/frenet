@@ -93,7 +93,7 @@ for i = 1:length(faObjects)
     fObjX = faObjects(i,1);
     fObjY = faObjects(i,2);
     
-    [fObjS, fObjD] = Cart2FRT(fObjX, fObjY, 0, faRefX, faRefY);
+    [fObjS, fObjD] = Cart2FRT(fObjX, fObjY, faRefX, faRefY);
     
     hof = plot(fObjS, fObjD, 'kx', 'DisplayName', 'Objects');
     
@@ -107,7 +107,7 @@ for i = 1:length(faObjects)
         fObjX = faObj(j,1);
         fObjY = faObj(j,2);
     
-        [fObjS, fObjD] = Cart2FRT(fObjX, fObjY, 0, faRefX, faRefY);
+        [fObjS, fObjD] = Cart2FRT(fObjX, fObjY, faRefX, faRefY);
         faObjS(j) = fObjS;
         faObjD(j) = fObjD;
         
@@ -123,7 +123,7 @@ set(hl, 'Interpreter', 'latex');
 fObjX = faObjects(1,1)
 fObjY = faObjects(1,2)
 
-[fObjS, fObjD] = Cart2FRT(fObjX, fObjY, 0, faRefX, faRefY);
+[fObjS, fObjD] = Cart2FRT(fObjX, fObjY, faRefX, faRefY);
 
 [fX, fY] = FRT2Cart(fObjS, fObjD, faRefRunLength, faRefX, faRefY)
 
