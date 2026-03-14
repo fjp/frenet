@@ -16,7 +16,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import copy
 import math
-import cubic_spline_planner
+from . import cubic_spline_planner
 
 # Parameter
 MAX_SPEED = 50.0 / 3.6  # maximum speed [m/s]
