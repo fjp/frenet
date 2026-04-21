@@ -208,7 +208,7 @@ This runs the test suite in `python/tests/` which covers:
 ## References
 
 - [Optimal Trajectory Generation for Dynamic Street Scenarios in a Frenet Frame](https://www.researchgate.net/profile/Moritz_Werling/publication/224156269_Optimal_Trajectory_Generation_for_Dynamic_Street_Scenarios_in_a_Frenet_Frame/links/54f749df0cf210398e9277af.pdf)
-- [Dissertation](https://www.ksp.kit.edu/download/1000021738)
+- [Dissertation: Ein neues Konzept für die Trajektoriengenerierung und -stabilisierung in zeitkritischen Verkehrsszenarien - Werling, Moritz](https://publikationen.bibliothek.kit.edu/1000021738)
 
 ### Python code:
 
