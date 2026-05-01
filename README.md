@@ -116,23 +116,34 @@ $$
 
 ### Transformation
 
-The transformation from local vehicle coordinates to Frenet coordinates is based on the following relations:
+The transformation from Cartesian coordinates to Frenet coordinates is based on the relationship shown in the figure below.
 
-Given a point $P_C$ in the vehicle frame search for the closest point $R_C$ on the reference path.
-The run length of $R_C$, which is known from the reference path points,
-determins the s coordinate of the transformed point $P_F$.
-If the reference path is sufficiently smooth (continuously differentiable) then the vector $\vec{PR}$ is orthogonal
-to the reference path at the point $R_C$. The signed length of $\vec{PR}$ determines the d coordinate of $P_F$.
-The sign is positive, if $P_C$ lies on the left along the run lenght of the reference path.
+<figure>
+    <a href="https://raw.githubusercontent.com/fjp/frenet/master/docs/images/transformation_cart_frenet.svg?sanitize=true"><img src="https://raw.githubusercontent.com/fjp/frenet/master/docs/images/transformation_cart_frenet.svg?sanitize=true"></a>
+    <figcaption>Transformation from Cartesian to Frenet coordinates.</figcaption>
+</figure>
 
-The procedure to transform a point $P_F$ from Frenet coordinates to the local vehicle frame in Cartesian coordinates is analogous. First, the point $R_C$, which lies on the reference path at run length $s$. Next, a normal unit vector $\vec{d}$
-is determined, which, in this point, is orthogonal to the reference path. The direction of this vector points towards
-positive $d$ values and therefore points to the left with increasing run length $s$.
-Therefore, the vector $\vec{d}$ depends on the run length, which leads to:
+Rather than formulating the trajectory generation problem directly in Cartesian coordinates $\vec{x}$,
+we switch to a moving reference frame defined by the tangential and normal vectors $\vec{t}_r$, $\vec{n}_r$
+at a certain point $\vec{r}(s)$ on the center line (reference path). The center line represents the ideal path
+along the road, for example the road center, or the result of a path planning algorithm.
+
+For a given point $\vec{x}$ in Cartesian coordinates, the closest point $\vec{r}(s)$ on the center line is determined first.
+The arc length $s$ of this closest point determines the $s$ coordinate of the transformed point.
+The perpendicular offset $d$ from the center line to $\vec{x}$ determines the $d$ coordinate.
+The sign of $d$ is positive when $\vec{x}$ lies to the left of the center line along the direction of travel.
+
+This gives the relation:
 
 $$
-P_C(s,d) = R_C(s) + d \cdot \vec{d}(s)
+\vec{x}(s(t),d(t)) = \vec{r}(s(t)) + d(t) \cdot \vec{n}_r(s(t))
 $$
+
+where $s$ denotes the covered arc length of the center line,
+$d$ is the perpendicular offset, and $\vec{n}_r$ is the normal unit vector at $\vec{r}(s)$.
+
+While the transformation of positions is intuitive, converting velocities, accelerations, and jerks is more involved
+because the curvature of the reference path must also be taken into account.
 
 ## Usage
 

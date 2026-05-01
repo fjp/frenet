@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   width="650"
+   height="450"
+   viewBox="0 0 650 450"
+   version="1.1">
+  <defs>
+    <marker
+       id="ArrowEnd"
+       refX="8"
+       refY="4"
+       markerWidth="10"
+       markerHeight="8"
+       orient="auto">
+      <path d="M 0,0 L 10,4 L 0,8 z" style="fill:#000000;" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="650" height="450" fill="#ffffff" />
+
+  <!-- Road surface (lower-left to upper-right, gently curved) -->
+  <path d="M 100,370 C 190,350 310,260 410,190 C 510,120 580,70 630,30"
+        style="fill:none;stroke:#c0c0c0;stroke-width:80;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.3" />
+
+  <!-- Center line / reference path (lower-left to upper-right) -->
+  <path d="M 100,370 C 190,350 310,260 410,190 C 510,120 580,70 630,30"
+        style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round" />
+
+  <!-- ===== Reference point r(s) on center line ===== -->
+  <circle cx="410" cy="190" r="7" style="fill:#b0b0b0;stroke:#000000;stroke-width:1.5" />
+
+  <!-- t_r: tangent vector at r(s), along center line direction (upper-right) -->
+  <line x1="410" y1="190" x2="480" y2="141"
+        style="stroke:#000000;stroke-width:2.5;marker-end:url(#ArrowEnd)" />
+  <!-- t_r label with vector arrow above -->
+  <text x="486" y="138" style="font-family:serif;font-style:italic;font-size:18px;fill:#000000">t</text>
+  <line x1="484" y1="126" x2="496" y2="126" style="stroke:#000000;stroke-width:1.2" />
+  <path d="M 496,124 L 499,126 L 496,128" style="fill:none;stroke:#000000;stroke-width:1.2" />
+  <text x="499" y="143" style="font-family:serif;font-style:italic;font-size:13px;fill:#000000">r</text>
+
+  <!-- n_r: normal vector at r(s), perpendicular to tangent, pointing left of travel -->
+  <!-- Tangent dir (70,-49). CW rotation for left-of-travel: (-49,-70). Scaled. -->
+  <line x1="410" y1="190" x2="361" y2="120"
+        style="stroke:#000000;stroke-width:2.5;marker-end:url(#ArrowEnd)" />
+  <!-- n_r label with vector arrow above -->
+  <text x="343" y="118" style="font-family:serif;font-style:italic;font-size:18px;fill:#000000">n</text>
+  <line x1="341" y1="106" x2="355" y2="106" style="stroke:#000000;stroke-width:1.2" />
+  <path d="M 355,104 L 358,106 L 355,108" style="fill:none;stroke:#000000;stroke-width:1.2" />
+  <text x="358" y="123" style="font-family:serif;font-style:italic;font-size:13px;fill:#000000">r</text>
+
+  <!-- r(s) label below-right of reference point -->
+  <text x="425" y="220" style="font-family:serif;font-style:italic;font-size:18px;fill:#000000">r</text>
+  <line x1="423" y1="208" x2="435" y2="208" style="stroke:#000000;stroke-width:1.2" />
+  <path d="M 435,206 L 438,208 L 435,210" style="fill:none;stroke:#000000;stroke-width:1.2" />
+  <text x="438" y="220" style="font-family:serif;font-style:italic;font-size:18px;fill:#000000">(s)</text>
+
+  <!-- s(t) label -->
+  <text x="460" y="210" style="font-family:serif;font-style:italic;font-size:18px;fill:#000000">s(t)</text>
+
+  <!-- Point x(s,d) offset from r(s) along n_r direction, placed between n_r tip and r(s) -->
+  <!-- n_r goes from (410,190) to (361,120). Place x(s,d) at about 60% along that direction -->
+  <circle cx="380" cy="148" r="7" style="fill:#b0b0b0;stroke:#000000;stroke-width:1.5" />
+
+  <!-- x(s,d) label to the left of the point -->
+  <text x="300" y="156" style="font-family:serif;font-style:italic;font-size:18px;fill:#000000">x</text>
+  <line x1="298" y1="144" x2="312" y2="144" style="stroke:#000000;stroke-width:1.2" />
+  <path d="M 312,142 L 315,144 L 312,146" style="fill:none;stroke:#000000;stroke-width:1.2" />
+  <text x="315" y="156" style="font-family:serif;font-style:italic;font-size:18px;fill:#000000">(s, d)</text>
+
+  <!-- d(t) line connecting r(s) to x(s,d) -->
+  <line x1="406" y1="186" x2="384" y2="154"
+        style="stroke:#000000;stroke-width:1.5;stroke-dasharray:5,4" />
+  <!-- d(t) label to the right of the dashed line -->
+  <text x="395" y="163" style="font-family:serif;font-style:italic;font-size:18px;fill:#000000">d(t)</text>
+
+  <!-- "center line" label along the reference path -->
+  <text x="520" y="100" style="font-family:serif;font-size:16px;fill:#000000">center line</text>
+
+  <!-- Cartesian coordinate axes (x, y) at lower-left corner, clear of the road -->
+  <g transform="translate(20,430)">
+    <line x1="0" y1="0" x2="50" y2="0" style="stroke:#000000;stroke-width:2;marker-end:url(#ArrowEnd)" />
+    <text x="55" y="5" style="font-family:serif;font-style:italic;font-size:16px;fill:#000000">x</text>
+    <line x1="0" y1="0" x2="0" y2="-50" style="stroke:#000000;stroke-width:2;marker-end:url(#ArrowEnd)" />
+    <text x="-5" y="-55" style="font-family:serif;font-style:italic;font-size:16px;fill:#000000">y</text>
+  </g>
+
+</svg>
